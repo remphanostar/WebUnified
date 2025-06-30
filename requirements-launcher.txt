@@ -1,0 +1,24 @@
+# Unified WebUI Launcher Dependencies
+# Core dependencies for the launcher itself (not the individual WebUIs)
+
+gradio>=4.0.0
+psutil>=5.9.0
+pyyaml>=6.0
+requests>=2.28.0
+tqdm>=4.64.0
+
+# Optional but recommended
+ipywidgets>=8.0.0
+jupyter>=1.0.0
+matplotlib>=3.5.0
+
+# For advanced features
+httpx>=0.24.0
+aiofiles>=22.0.0
+fastapi>=0.94.0
+uvicorn>=0.20.0
+
+# Development tools (optional)
+black>=22.0.0
+flake8>=5.0.0
+pytest>=7.0.0

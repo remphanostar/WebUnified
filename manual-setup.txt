@@ -1,0 +1,11 @@
+# Clone the repository
+git clone https://github.com/your-repo/unified-webui-launcher.git
+cd unified-webui-launcher
+
+# Create launcher environment
+python3 -m venv launcher_venv
+source launcher_venv/bin/activate
+pip install -r requirements-launcher.txt
+
+# Setup all WebUI environments
+python manage_venvs.py --setup-all

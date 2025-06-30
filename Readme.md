@@ -1,6 +1,6 @@
 # Unified Multi-WebUI Stable Diffusion Launcher
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](
-https://colab.research.google.com/github/remphanostar/WebUnified/blob/main/colab_launcher.ipynb)
+https://colab.research.google.com/github/remphanostar/WebUnified/blob/main/WebUnified-Colab.ipynb)
 
 A comprehensive solution for managing multiple Stable Diffusion WebUIs with isolated environments and centralized asset management.
 

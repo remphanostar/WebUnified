@@ -111,7 +111,8 @@ Place your {category.lower()} files here to make them available to all tools.
                         text=True,
                         timeout=10
                     )
-                    if version in result.stdout:
+                    ### FIXED ###: Change from exact match `in` to `startswith` for flexibility
+                    if result.stdout.strip().startswith(f"Python {version}"):
                         return exe
                 except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
                     continue
@@ -164,10 +165,16 @@ Place your {category.lower()} files here to make them available to all tools.
                 python_exe, "-m", "venv", str(venv_dir)
             ], check=True, timeout=120)
             
-            # Upgrade pip
-            pip_exe = venv_dir / ("Scripts/pip.exe" if os.name == 'nt' else "bin/pip")
+            ### FIXED ###: Ensure pip exists to prevent exit code 127
+            logger.info("Ensuring pip is available in the new venv...")
             subprocess.run([
-                str(pip_exe), "install", "--upgrade", "pip", "setuptools", "wheel"
+                str(python_exe), "-m", "ensurepip", "--upgrade"
+            ], check=True, timeout=120)
+            
+            # Upgrade pip using the venv's python
+            venv_python_exe = venv_dir / "bin" / "python"
+            subprocess.run([
+                str(venv_python_exe), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"
             ], check=True, timeout=300)
             
             logger.info(f"✅ Virtual environment created for {tool_config['name']}")
@@ -176,6 +183,9 @@ Place your {category.lower()} files here to make them available to all tools.
         except Exception as e:
             logger.error(f"❌ Failed to create venv for {tool_config['name']}: {e}")
             return False
+    
+    # ... The rest of the file (install_dependencies, launch_tool, etc.) remains the same ...
+    # (The following code is the same as before, no changes needed)
     
     def install_dependencies(self, tool_id: str) -> bool:
         """Install dependencies for specific tool"""

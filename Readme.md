@@ -224,6 +224,85 @@ ls -la /workspace/automatic1111/models/
 
 Getting Help
 
+
+4. Usage Workflow
+
+For Users (Colab + GitHub):
+
+    Open in Colab:
+
+    https://colab.research.google.com/github/your-username/unified-webui-launcher/blob/main/colab_launcher.ipynb
+
+    First Time Setup (Run once):
+        Mount Google Drive → Creates persistent storage
+        Auto-detect GPU → Optimizes for T4/V100/A100
+        Setup WebUI → ~15 minutes, saved to Drive
+
+    Daily Usage (Instant):
+        Open notebook → Auto-restores from Drive
+        Launch WebUI → Instant startup
+        Create art → Full WebUI functionality
+
+    Session Management:
+        Disconnect: Everything saved to Google Drive
+        Reconnect: Run restore cell, instantly ready
+        Share: Send Colab link to others
+
+5. Colab-Specific Optimizations
+
+Storage Strategy:
+
+Google Drive/AI_WebUIs/
+├── workspace/           # WebUI installations (persistent)
+├── models/             # Shared models (persistent) 
+├── environments/       # Python environments (persistent)
+├── sessions/          # Session state (persistent)
+└── logs/              # Execution logs (persistent)
+
+Bandwidth Optimization:
+
+    Smart Caching: Only download what's changed
+    Incremental Setup: Resume interrupted installations
+    Model Sharing: Single model storage across WebUIs
+    Session Restore: Zero re-download on reconnect
+
+GPU Auto-Detection:
+
+# Automatically detects and optimizes for:
+T4 (Free/Pro)    → --medvram --opt-channelslast
+V100 (Pro)       → --medvram --xformers  
+A100 (Pro+)      → --always-high-vram
+
+6. Repository Setup Instructions
+
+For Repository Creators:
+
+    Create GitHub Repository:
+
+    git init unified-webui-launcher
+    cd unified-webui-launcher
+
+    # Add all files (colab_launcher.ipynb, manage_venvs.py, etc.)
+    git add .
+    git commit -m "Initial Colab-optimized WebUI launcher"
+    git push origin main
+
+Add Colab Badge to README:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/your-username/unified-webui-launcher/blob/main/colab_launcher.ipynb)
+
+    Enable GitHub Pages (optional):
+        Settings → Pages → Deploy from branch main
+        Creates documentation site
+
+For Users:
+
+    One-Click Launch: Click the Colab badge
+    Fork for Customization: Fork repo for personal modifications
+    Star for Updates: Get notified of improvements
+
+This Colab + GitHub combo provides the ultimate accessibility - users get a production-ready multi-WebUI system with zero local installation, persistent storage, and automatic GPU optimization, all from a single click! 🚀
+
     Check logs: All output is logged to /workspace/logs/
     Verify setup: Use --status command to check system state
     Reset environment: Delete venv folder and re-run setup

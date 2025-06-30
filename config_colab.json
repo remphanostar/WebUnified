@@ -1,0 +1,61 @@
+{
+  "colab_settings": {
+    "use_drive_mount": true,
+    "drive_base_path": "/content/drive/MyDrive/AI_WebUIs",
+    "session_timeout_hours": 12,
+    "auto_detect_gpu": true,
+    "prefer_lightweight_setup": true,
+    "max_setup_time_minutes": 45
+  },
+  "workspace_settings": {
+    "workspace_dir": "/content/drive/MyDrive/AI_WebUIs/workspace",
+    "models_dir": "/content/drive/MyDrive/AI_WebUIs/models",
+    "temp_dir": "/content/temp_webui",
+    "log_level": "INFO"
+  },
+  "colab_optimized_tools": {
+    "automatic1111": {
+      "name": "AUTOMATIC1111",
+      "priority": "high",
+      "quick_setup": true,
+      "colab_args": ["--share", "--xformers", "--medvram", "--enable-insecure-extension-access"],
+      "drive_cache": true,
+      "estimated_setup_time": "15-20 minutes"
+    },
+    "fooocus": {
+      "name": "Fooocus", 
+      "priority": "high",
+      "quick_setup": true,
+      "colab_args": ["--share", "--always-high-vram"],
+      "drive_cache": true,
+      "estimated_setup_time": "10-15 minutes"
+    },
+    "forge": {
+      "name": "Forge WebUI",
+      "priority": "medium", 
+      "quick_setup": false,
+      "colab_args": ["--share", "--cuda-stream"],
+      "estimated_setup_time": "20-25 minutes"
+    }
+  },
+  "colab_hardware_profiles": {
+    "T4": {
+      "name": "Tesla T4 (Colab Free/Pro)",
+      "vram_gb": 16,
+      "args": ["--medvram", "--opt-channelslast"],
+      "recommended_tools": ["automatic1111", "fooocus"]
+    },
+    "V100": {
+      "name": "Tesla V100 (Colab Pro)",
+      "vram_gb": 16, 
+      "args": ["--medvram"],
+      "recommended_tools": ["automatic1111", "forge", "fooocus"]
+    },
+    "A100": {
+      "name": "Tesla A100 (Colab Pro+)",
+      "vram_gb": 40,
+      "args": ["--always-high-vram"],
+      "recommended_tools": ["all"]
+    }
+  }
+}

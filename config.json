@@ -1,0 +1,226 @@
+# Complete default configuration
+default_config = {
+  "workspace_settings": {
+    "workspace_dir": "/workspace",
+    "models_dir": "/data/models",
+    "log_level": "INFO",
+    "auto_create_dirs": True,
+    "max_log_lines": 1000
+  },
+  "tools": {
+    "automatic1111": {
+      "name": "AUTOMATIC1111",
+      "dir": "automatic1111",
+      "repo": "https://github.com/AUTOMATIC1111/stable-diffusion-webui.git",
+      "script": "launch.py",
+      "python_version": "3.10", # Changed from 3.10.6 for Colab compatibility
+      "venv_name": "a1111_venv",
+      "install_cmd": "{pip} install -r requirements_versions.txt",
+      "default_args": ["--share", "--xformers", "--no-half-vae", "--medvram", "--enable-insecure-extension-access"],
+      "centralization_method": "cli_args",
+      "centralization_args": [
+        "--ckpt-dir", "{models_dir}/Stable-diffusion",
+        "--vae-dir", "{models_dir}/VAE",
+        "--lora-dir", "{models_dir}/Lora",
+        "--embeddings-dir", "{models_dir}/embeddings",
+        "--hypernetwork-dir", "{models_dir}/hypernetworks",
+        "--esrgan-models-path", "{models_dir}/ESRGAN"
+      ],
+      "description": "The foundational WebUI for Stable Diffusion with extensive community support",
+      "port": 7862,
+      "status": "stopped",
+      "risk_level": "low",
+      "conflicts": ["gradio>=4.0", "pytorch>=2.2", "python>=3.11"],
+      "icon": "🎨",
+      "category": "stable_diffusion"
+    },
+    "sdnext": {
+      "name": "SD.Next",
+      "dir": "sdnext",
+      "repo": "https://github.com/vladmandic/automatic.git",
+      "script": "launch.py",
+      "python_version": "3.11",
+      "venv_name": "sdnext_venv",
+      "install_cmd": "{pip} install -r requirements.txt",
+      "default_args": ["--use-xformers", "--backend", "diffusers", "--medvram", "--share"],
+      "centralization_method": "cli_args",
+      "centralization_args": ["--models-dir", "{models_dir}"],
+      "description": "Next-generation interface with cutting-edge features and optimizations",
+      "port": 7860,
+      "status": "stopped",
+      "risk_level": "low",
+      "conflicts": ["old gradio versions"],
+      "icon": "🚀",
+      "category": "stable_diffusion"
+    },
+    "forge": {
+      "name": "Forge WebUI",
+      "dir": "forge",
+      "repo": "https://github.com/lllyasviel/stable-diffusion-webui-forge.git",
+      "script": "launch.py",
+      "python_version": "3.11",
+      "venv_name": "forge_venv",
+      "install_cmd": "{pip} install -r requirements_versions.txt",
+      "default_args": ["--share"],
+      "performance_args": ["--cuda-stream"],
+      "safe_args": ["--always-offload-from-vram"],
+      "centralization_method": "cli_args",
+      "centralization_args": [
+        "--ckpt-dir", "{models_dir}/Stable-diffusion",
+        "--vae-dir", "{models_dir}/VAE",
+        "--lora-dir", "{models_dir}/Lora",
+        "--controlnet-dir", "{models_dir}/ControlNet"
+      ],
+      "description": "Performance-optimized fork with advanced memory management",
+      "port": 7861,
+      "status": "stopped",
+      "risk_level": "medium",
+      "conflicts": ["pytorch<2.3.1"],
+      "icon": "⚡",
+      "category": "stable_diffusion"
+    },
+    "invokeai": {
+      "name": "InvokeAI",
+      "dir": "invokeai",
+      "repo": "https://github.com/invoke-ai/InvokeAI.git",
+      "script": "invokeai-web",
+      "python_version": "3.11",
+      "venv_name": "invokeai_venv",
+      "install_cmd": "{pip} install 'InvokeAI[xformers]' --use-pep517 --extra-index-url https://download.pytorch.org/whl/cu121",
+      "default_args": ["--host", "0.0.0.0", "--port", "9090"],
+      "centralization_method": "config_files",
+      "config_file": "invokeai.yaml",
+      "config_template": {
+        "InvokeAI": {
+          "models_dir": "{models_dir}",
+          "precision": "float16",
+          "attention_type": "xformers",
+          "sequential_guidance": true
+        }
+      },
+      "description": "Professional node-based workflow system with React UI",
+      "port": 9090,
+      "status": "stopped",
+      "risk_level": "low",
+      "conflicts": ["gradio (uses React)"],
+      "icon": "🎭",
+      "category": "stable_diffusion"
+    },
+    "fooocus": {
+      "name": "Fooocus",
+      "dir": "fooocus",
+      "repo": "https://github.com/lllyasviel/Fooocus.git",
+      "script": "launch.py",
+      "python_version": "3.10",
+      "venv_name": "fooocus_venv",
+      "install_cmd": "{pip} install -r requirements_versions.txt",
+      "default_args": ["--share", "--always-high-vram"],
+      "centralization_method": "config_files",
+      "config_file": "config.txt",
+      "config_template": {
+        "path_checkpoints": "{models_dir}/Stable-diffusion",
+        "path_loras": "{models_dir}/Lora",
+        "path_vae_approx": "{models_dir}/VAE",
+        "path_controlnet": "{models_dir}/ControlNet",
+        "path_embeddings": "{models_dir}/embeddings",
+        "path_upscale_models": "{models_dir}/ESRGAN"
+      },
+      "description": "Simplified interface inspired by Midjourney with preset optimizations",
+      "port": 7865,
+      "status": "stopped",
+      "risk_level": "low",
+      "conflicts": ["modern pytorch versions"],
+      "icon": "🎯",
+      "category": "stable_diffusion"
+    },
+    "facefusion": {
+      "name": "FaceFusion",
+      "dir": "facefusion",
+      "repo": "https://github.com/facefusion/facefusion.git",
+      "script": "run.py",
+      "python_version": "3.11",
+      "venv_name": "facefusion_venv",
+      "install_cmd": "python install.py --onnxruntime cuda",
+      "default_args": ["--execution-providers", "cuda", "--execution-thread-count", "8"],
+      "centralization_method": "none",
+      "description": "Advanced face swapping and enhancement with ONNX runtime",
+      "port": 7870,
+      "status": "stopped",
+      "risk_level": "medium",
+      "conflicts": ["pytorch (uses ONNX)"],
+      "icon": "👤",
+      "category": "face_tools"
+    },
+    "roop_floyd": {
+      "name": "ROOP-FLOYD",
+      "dir": "roop",
+      "repo": "https://codeberg.org/Cognibuild/ROOP-FLOYD.git",
+      "script": "run.py",
+      "python_version": "3.10",
+      "venv_name": "roop_venv",
+      "install_cmd": "{pip} install -r requirements.txt && {pip} install --force-reinstall pydantic==1.10.12 gradio==3.50.2",
+      "default_args": ["--execution-provider", "cuda", "--many-faces"],
+      "centralization_method": "none",
+      "description": "Improved face swapping with better stability (fragile dependencies)",
+      "port": 7871,
+      "status": "stopped",
+      "risk_level": "high",
+      "conflicts": ["gradio>=4.0", "pydantic>=2.0"],
+      "icon": "🔄",
+      "category": "face_tools",
+      "notes": "Extremely fragile - requires specific old versions"
+    }
+  },
+  "hardware_profiles": {
+    "high_vram": {
+      "name": "High VRAM (16GB+)",
+      "description": "For RTX 3090/4090, A100, etc.",
+      "args": ["--always-high-vram", "--no-lowvram"],
+      "icon": "🚀"
+    },
+    "medium_vram": {
+      "name": "Medium VRAM (8-16GB)",
+      "description": "For RTX 3070/4070, RTX 3080, etc.",
+      "args": ["--medvram"],
+      "icon": "⚡"
+    },
+    "low_vram": {
+      "name": "Low VRAM (<8GB)",
+      "description": "For RTX 3060, GTX 1080, etc.",
+      "args": ["--lowvram", "--opt-channelslast"],
+      "icon": "💾"
+    }
+  },
+  "model_categories": {
+    "Stable-diffusion": {
+      "description": "Checkpoint models (.safetensors, .ckpt)",
+      "extensions": [".safetensors", ".ckpt"],
+      "size_estimate_gb": 4.0
+    },
+    "Lora": {
+      "description": "LoRA and LyCORIS models",
+      "extensions": [".safetensors", ".pt"],
+      "size_estimate_gb": 0.1
+    },
+    "VAE": {
+      "description": "VAE models (.pt, .safetensors)",
+      "extensions": [".safetensors", ".pt"],
+      "size_estimate_gb": 0.8
+    },
+    "ControlNet": {
+      "description": "ControlNet models",
+      "extensions": [".safetensors", ".pth"],
+      "size_estimate_gb": 1.5
+    },
+    "embeddings": {
+      "description": "Textual Inversion embeddings",
+      "extensions": [".pt", ".safetensors"],
+      "size_estimate_gb": 0.01
+    },
+    "ESRGAN": {
+      "description": "Upscaler models",
+      "extensions": [".pth"],
+      "size_estimate_gb": 0.2
+    }
+  }
+}
